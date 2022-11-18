@@ -1,0 +1,8 @@
+[package]
+name = "bevy_vfx"
+version = "0.1.0"
+edition = "2021"
+authors = ["DasLixou"]
+
+[dependencies]
+bevy = { version = "0.9.0" }
