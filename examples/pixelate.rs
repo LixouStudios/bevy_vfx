@@ -6,14 +6,14 @@ use bevy::{
     render::{
         camera::RenderTarget,
         render_resource::{
-            Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
+            Extent3d, ShaderRef, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
         },
         texture::BevyDefault,
     },
     sprite::{ColorMaterial, MaterialMesh2dBundle},
     DefaultPlugins,
 };
-use bevy_vfx::prelude::{VFXPipe, VFXPipeline, VFXPlugin};
+use bevy_vfx::prelude::{CustomVFXPipe, VFXPipe, VFXPipeline, VFXPlugin};
 
 fn main() {
     App::new()
@@ -80,6 +80,12 @@ struct Pixelate {
     pub size: u8,
     image: Handle<Image>,
     enabled: bool,
+}
+
+impl CustomVFXPipe for Pixelate {
+    fn fragment_shader() -> ShaderRef {
+        "shaders/pixelate.wgsl".into()
+    }
 }
 
 impl Pixelate {
