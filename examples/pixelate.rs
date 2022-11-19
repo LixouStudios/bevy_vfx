@@ -7,7 +7,7 @@ use bevy::{
     sprite::{ColorMaterial, MaterialMesh2dBundle},
     DefaultPlugins,
 };
-use bevy_vfx::prelude::{PipelineComponent, VFXPipe, VFXPipeData, VFXPipeline, VFXPlugin};
+use bevy_vfx::prelude::{PipelineComponent, VFXPipe, VFXPipeline, VFXPlugin};
 
 fn main() {
     App::new()
@@ -37,9 +37,9 @@ fn setup(
         RenderTarget::Window(Default::default()),
     );
 
-    // some test code to edit data.. needs to be improved!
+    // some test code to edit data.
     let mut x = Pixelate::create(4);
-    x.as_any_mut().downcast_mut::<Pixelate>().unwrap().size = 4;
+    x.size = 4;
 
     commands.spawn((
         Camera2dBundle {
@@ -58,20 +58,10 @@ struct Pixelate {
 }
 
 // this is a mess! make a proc macro
-impl VFXPipeData for Pixelate {
-    fn as_any(&self) -> &dyn std::any::Any {
-        self
-    }
-
-    fn as_any_mut(&mut self) -> &mut dyn std::any::Any {
-        self
-    }
-}
+impl VFXPipe for Pixelate {}
 
 impl Pixelate {
-    pub fn create(size: u8) -> VFXPipe {
-        VFXPipe {
-            data: Box::new(Pixelate { size }),
-        }
+    pub fn create(size: u8) -> Box<Pixelate> {
+        Box::new(Pixelate { size })
     }
 }

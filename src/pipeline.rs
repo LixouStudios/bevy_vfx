@@ -9,12 +9,12 @@ use crate::prelude::VFXPipe;
 #[derive(TypeUuid)]
 #[uuid = "df501d89-a02d-4a8c-88ba-2d3033583527"]
 pub struct VFXPipeline {
-    pipes: Vec<VFXPipe>,
+    pipes: Vec<Box<dyn VFXPipe>>,
     target: RenderTarget,
 }
 
 impl VFXPipeline {
-    pub fn new(pipes: Vec<VFXPipe>, target: RenderTarget) -> Self {
+    pub fn new(pipes: Vec<Box<dyn VFXPipe>>, target: RenderTarget) -> Self {
         VFXPipeline { pipes, target }
     }
 
