@@ -1,20 +1,9 @@
-use bevy::prelude::AssetEvent;
-use bevy::prelude::Assets;
-use bevy::prelude::CoreStage;
-use bevy::prelude::EventReader;
-use bevy::prelude::Handle;
-use bevy::prelude::Image;
-use bevy::prelude::Plugin;
-use bevy::prelude::Query;
-use bevy::prelude::Res;
-use bevy::prelude::ResMut;
-use bevy::render::camera::RenderTarget;
-use bevy::render::render_resource::Extent3d;
+use bevy::prelude::{
+    AssetEvent, Assets, CoreStage, EventReader, Handle, Image, Plugin, Query, Res, ResMut,
+};
+use bevy::render::{camera::RenderTarget, render_resource::Extent3d};
 use bevy::utils::HashSet;
-use bevy::window::WindowCreated;
-use bevy::window::WindowId;
-use bevy::window::WindowResized;
-use bevy::window::Windows;
+use bevy::window::{WindowCreated, WindowId, WindowResized, Windows};
 
 pub use crate::pipe::*;
 pub use crate::pipeline::*;
