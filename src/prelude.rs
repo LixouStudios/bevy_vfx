@@ -73,8 +73,6 @@ fn resize_vfx_pipes(
                 .get_render_target_info(&windows, &images)
                 .unwrap();
 
-            let logical_size = (info.physical_size.as_dvec2() / info.scale_factor).as_vec2();
-
             for pipe in &vfx.pipes {
                 images.get_mut(&pipe.image()).unwrap().resize(Extent3d {
                     width: info.physical_size.x,
