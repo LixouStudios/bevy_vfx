@@ -30,14 +30,18 @@ impl VFXPipeline {
     }
 
     pub fn render_target(&self) -> RenderTarget {
-        if let Some(first_pipe) = self.pipes.get(0) {
-            if first_pipe.is_enabled() {
-                RenderTarget::Image(first_pipe.image())
+        let mut index = 0;
+        loop {
+            if let Some(pipe) = self.pipes.get(index) {
+                if pipe.is_enabled() {
+                    return RenderTarget::Image(pipe.image());
+                } else {
+                    index += 1;
+                    continue;
+                }
             } else {
-                self.target.clone() // TODO: iterate over every pipe until end or found
+                return self.target.clone();
             }
-        } else {
-            self.target.clone()
         }
     }
 }
