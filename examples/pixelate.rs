@@ -1,7 +1,7 @@
 use bevy::{
     prelude::{
-        default, info, shape, App, Assets, Camera, Camera2dBundle, Color, Commands, Handle, Image,
-        Input, KeyCode, Mesh, Quat, Query, Res, ResMut, Transform, Vec3,
+        default, shape, App, Assets, Camera, Camera2dBundle, Color, Commands, Handle, Image, Input,
+        KeyCode, Mesh, Quat, Query, Res, ResMut, Transform, Vec3,
     },
     render::{
         camera::RenderTarget,
@@ -75,34 +75,11 @@ fn setup(
     ));
 }
 
+#[derive(VFXPipe)]
 struct Pixelate {
     pub size: u8,
     image: Handle<Image>,
     enabled: bool,
-}
-
-// this is a mess! make a proc macro
-impl VFXPipe for Pixelate {
-    fn image(&self) -> Handle<Image> {
-        self.image.clone_weak()
-    }
-
-    fn is_enabled(&self) -> bool {
-        self.enabled
-    }
-
-    fn set_enabled(&mut self, enabled: bool) {
-        info!("now {}", enabled);
-        self.enabled = enabled;
-    }
-
-    fn as_any(&self) -> &dyn std::any::Any {
-        self
-    }
-
-    fn as_any_mut(&mut self) -> &mut dyn std::any::Any {
-        self
-    }
 }
 
 impl Pixelate {

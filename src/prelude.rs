@@ -7,6 +7,7 @@ use bevy::window::{WindowCreated, WindowId, WindowResized, Windows};
 
 pub use crate::pipe::*;
 pub use crate::pipeline::*;
+pub use bevy_vfx_macros::*;
 
 pub struct VFXPlugin;
 
