@@ -4,7 +4,7 @@ use bevy::{
         Input, KeyCode, Mesh, Quat, Query, Res, ResMut, Transform, Vec3,
     },
     render::{
-        camera::{self, RenderTarget},
+        camera::RenderTarget,
         render_resource::{
             Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
         },
@@ -13,7 +13,7 @@ use bevy::{
     sprite::{ColorMaterial, MaterialMesh2dBundle},
     DefaultPlugins,
 };
-use bevy_vfx::prelude::{PipelineComponent, VFXPipe, VFXPipeline, VFXPlugin};
+use bevy_vfx::prelude::{VFXPipe, VFXPipeline, VFXPlugin};
 
 fn main() {
     App::new()
@@ -26,13 +26,10 @@ fn main() {
 
 fn toggle_vfx(
     keyboard_input: Res<Input<KeyCode>>,
-    mut query: Query<(&mut Camera, &PipelineComponent)>,
-    mut vfx_pipes: ResMut<Assets<VFXPipeline>>,
+    mut query: Query<(&mut Camera, &mut VFXPipeline)>,
 ) {
     if keyboard_input.just_pressed(KeyCode::Space) {
-        for (mut cam, vfx) in &mut query {
-            let pipeline = vfx_pipes.get_mut(vfx).unwrap();
-
+        for (mut cam, mut pipeline) in &mut query {
             pipeline
                 .get_pipe_mut::<Pixelate>(0)
                 .unwrap()
@@ -47,7 +44,6 @@ fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
-    mut vfx_pipes: ResMut<Assets<VFXPipeline>>,
     mut images: ResMut<Assets<Image>>,
 ) {
     commands.spawn(MaterialMesh2dBundle {
@@ -75,7 +71,7 @@ fn setup(
             },
             ..default()
         },
-        PipelineComponent(vfx_pipes.add(pipeline)), // this makes us access the pipeline and also let it drop when there is no more camera using it :)
+        pipeline,
     ));
 }
 

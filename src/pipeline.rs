@@ -1,18 +1,11 @@
-use std::ops::{Deref, DerefMut};
-
-use bevy::{
-    prelude::{Component, Handle},
-    reflect::TypeUuid,
-    render::camera::RenderTarget,
-};
+use bevy::{prelude::Component, render::camera::RenderTarget};
 
 use crate::prelude::VFXPipe;
 
-#[derive(TypeUuid)]
-#[uuid = "df501d89-a02d-4a8c-88ba-2d3033583527"]
+#[derive(Component)]
 pub struct VFXPipeline {
-    pipes: Vec<Box<dyn VFXPipe>>,
-    target: RenderTarget,
+    pub(crate) pipes: Vec<Box<dyn VFXPipe>>,
+    pub(crate) target: RenderTarget,
 }
 
 impl VFXPipeline {
@@ -46,22 +39,5 @@ impl VFXPipeline {
         } else {
             self.target.clone()
         }
-    }
-}
-
-#[derive(Component)]
-pub struct PipelineComponent(pub Handle<VFXPipeline>);
-
-impl Deref for PipelineComponent {
-    type Target = Handle<VFXPipeline>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for PipelineComponent {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
     }
 }
